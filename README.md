@@ -14,7 +14,7 @@ Tested on:
 
 1. Download plugin archive from GitHub and put it to `wp-content/plugins`.
 2. Activate the plugin on the Wordpress plugins page.
-3. You may remove `bin` and `tests` folders, they are used only for plugin development.
+3. You may remove `bin` and `tests` folders, they are used only during development.
 4. You may use the [afragen/github-updater plugin](https://github.com/afragen/github-updater) to get recent updates.
 
 ## Plugin settings
@@ -29,6 +29,8 @@ define('CORPUS_API_URL', 'http://localhost:3000/api');
 ## PHP API reference
 
 ### Performing API calls
+
+Get the Corpus API object:
 
 ```php
 // Get Corpus API object
@@ -46,6 +48,15 @@ $model = $api->Law;
 $model = $api->laws;
 $model = $api->Laws;
 
+// Camel case, these are equal
+$model = $api->mediaIncident;
+$model = $api->MediaIncident;
+$model = $api->mediaincident;
+```
+
+Make API calls:
+
+```php
 // Find in a set
 $laws = $api->laws([
     'where' => [ 'defaultLocale' => 'en' ],
@@ -91,15 +102,17 @@ $comparison = api->law->get([
 ### Helper functions
 
 ##### `corpus_get_api_url()`
-Gets Corpus API url.
+Returns Corpus API url. Default value is `http://corpus.govright.org/api`.
 
 ##### `corpus_get_api()`
-Gets Corpus API object to perform API calls.
+Returns Corpus API object to perform API calls.
 
 ##### `corpus_get_locale($item, $languageCode = null)`
-Extracts locale data from a model instance. If `$languageCode` specified - returns corresponding translations if available
-or the first available otherwise. Has a support of the WPML plugin and tries to extract currently set language if `$languageCode`
-is not specified.
+Extracts locale data from a model instance.
+If `$languageCode` is specified - returns corresponding translations if available
+or a first available otherwise.
+If `$languageCode` is not specified - checks if the WPML plugin is activated and tries to extract
+currently set language, return a first available locale otherwise.
 
 ##### `corpus_atts_string($atts, $include_locale = true)`
 Converts `$atts` array into a string. Includes `data-locale` prop if `$include_locale` is `true`
@@ -109,13 +122,11 @@ and WPML is activated.
 
 Plugin adds a global `GovRight` object which has the following properties/methods:
 
-* `corpusApiUrl` - string, property that stores Corpus API url like `http://corpus.govright.org/api`
+* `corpusApiUrl` - string, property that stores Corpus API url. Default value is `http://corpus.govright.org/api`.
 
 ## Development
 
-### Testing
-
-#### Configure testing environment
+### Configure testing environment
 ```bash
 # Go to plugin directory
 cd wp-content/plugins/wp-corpus-utils
@@ -126,7 +137,7 @@ cd wp-content/plugins/wp-corpus-utils
 
 Also, make sure you have PHPUnit installed.
 
-#### Run tests
+### Run tests
 ```bash
 # In the plugin root, just run this
 phpunit

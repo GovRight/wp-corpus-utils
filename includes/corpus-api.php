@@ -42,11 +42,12 @@ class CorpusApiServer {
         if(substr($name, -1) !== 's') {
             $name .= 's';
         }
-        if(!empty($this->_cache[$name])) {
-            return $this->_cache[$name];
+        $key = strtoupper($name);
+        if(!empty($this->_cache[$key])) {
+            return $this->_cache[$key];
         }
-        $this->_cache[$name] = new CorpusApiModel($name);
-        return $this->_cache[$name];
+        $this->_cache[$key] = new CorpusApiModel($name);
+        return $this->_cache[$key];
     }
 }
 
