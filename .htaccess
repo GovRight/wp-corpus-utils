@@ -1,0 +1,4 @@
+Deny From All
+<FilesMatch "\.js|\.css">
+    Allow From All
+</FilesMatch>
