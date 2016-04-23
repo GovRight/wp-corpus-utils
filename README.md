@@ -6,8 +6,7 @@ in Wordpress themes and plugins.
 ## Requirements
 
 Tested on:
-
-* Wordpress 4.5
+* Wordpress >= 4.5
 * PHP >= 5.5
 * (dev) PHPUnit 4.8.24
 
@@ -70,7 +69,7 @@ $law = $api->Laws->findOne([
         'slug' => 'morocco-penal-revision'
     ]
 ]);
-$count = $this->api->laws->count([
+$count = $api->laws->count([
     'where' => [ 'slug' => 'morocco-penal-revision' ]
 ]);
 
