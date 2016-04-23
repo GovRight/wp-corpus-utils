@@ -135,7 +135,14 @@ Plugin adds a global `GovRight` object which has the following properties/method
 ---
 
 ##### `corpusApiUrl` 
-String property that stores Corpus API url. Default value is `http://corpus.govright.org/api`.
+String property that stores Corpus API url. Default value is `http://corpus.govright.org/api`. Example:
+
+```javascript
+// Load all laws
+$.get(GovRight.corpusApiUrl + '/laws', function(laws) {
+    console.log(laws);
+});
+```
 
 ---
 
