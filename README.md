@@ -107,7 +107,7 @@ Returns Corpus API url. Default value is `http://corpus.govright.org/api`.
 ##### `corpus_get_api()`
 Returns Corpus API object to perform API calls.
 
-##### `corpus_get_locale($item, $languageCode = null)`
+##### `corpus_get_locale($instance, $languageCode = null)`
 Extracts locale data from a model instance.
 If `$languageCode` is specified - returns corresponding translations if available
 or a first available otherwise.
