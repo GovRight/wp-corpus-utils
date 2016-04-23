@@ -101,11 +101,17 @@ $comparison = api->law->get([
 
 ### Helper functions
 
+---
+
 ##### `corpus_get_api_url()`
 Returns Corpus API url. Default value is `http://corpus.govright.org/api`.
 
+---
+
 ##### `corpus_get_api()`
 Returns Corpus API object to perform API calls.
+
+---
 
 ##### `corpus_get_locale($instance, $languageCode = null)`
 Extracts locale data from a model instance.
@@ -114,15 +120,24 @@ or a first available otherwise.
 If `$languageCode` is not specified - checks if the WPML plugin is activated and tries to extract
 currently set language, return a first available locale otherwise.
 
+---
+
 ##### `corpus_atts_string($atts, $include_locale = true)`
 Converts `$atts` array into a string. Includes `data-locale` prop if `$include_locale` is `true`
 and WPML is activated.
+
+---
 
 ## JavaScript API reference
 
 Plugin adds a global `GovRight` object which has the following properties/methods:
 
-* `corpusApiUrl` - string, property that stores Corpus API url. Default value is `http://corpus.govright.org/api`.
+---
+
+##### `corpusApiUrl` 
+String property that stores Corpus API url. Default value is `http://corpus.govright.org/api`.
+
+---
 
 ## Development
 
