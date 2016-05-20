@@ -57,7 +57,7 @@ $model = $api->mediaincident;
 Make API calls:
 
 ```php
-// Find in a set
+// Find in a set with filter
 $laws = $api->laws([
     'where' => [ 'defaultLocale' => 'en' ],
     'limit' => 3,
