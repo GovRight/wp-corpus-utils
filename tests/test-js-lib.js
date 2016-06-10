@@ -1,4 +1,33 @@
 var test = QUnit.test;
+
+// Utility functions
+var locales = {
+    en: { title: 'English title' },
+    fr: { title: 'Titre français' },
+    ar: { title: 'عنوان العربية' }
+};
+
+test('GovRight getLocale method should extract requested locale', function(assert) {
+    assert.strictEqual(GovRight.getLocale(locales, 'fr'), locales.fr);
+});
+
+test('GovRight getLocale method should extract any available locale if code omitted', function(assert) {
+    assert.strictEqual(GovRight.getLocale(locales), locales.en);
+});
+
+test('GovRight getLocaleProp method should extract requested locale', function(assert) {
+    assert.strictEqual(GovRight.getLocaleProp(locales, 'title', 'fr'), locales.fr.title);
+});
+
+test('GovRight getLocaleProp method should extract any available locale if code omitted', function(assert) {
+    assert.strictEqual(GovRight.getLocaleProp(locales, 'title'), locales.en.title);
+});
+
+test('GovRight getLocaleProp method should return empty string if prop does not exist', function(assert) {
+    assert.strictEqual(GovRight.getLocaleProp(locales, 'text'), '');
+});
+
+// API lib
 var api = GovRight.api;
 var laws = api('laws');
 var timeout = function(cb) {

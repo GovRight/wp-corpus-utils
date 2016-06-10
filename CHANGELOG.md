@@ -6,7 +6,7 @@ Features:
 
 * JavaScript api updated:
   * Corpus API interaction library
-  * Locale extractor function
+  * Locale extraction functions
 
 
 ### 1.0.0 (Apr 23 2016)

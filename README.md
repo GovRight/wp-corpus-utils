@@ -152,6 +152,15 @@ currently set language, return a first available locale otherwise.
 
 ---
 
+##### `GovRight.getLocaleProp(instance, prop, languageCode)`
+Extracts a property from the locale object on a given model instance.
+If `languageCode` is specified - returns corresponding translation if available
+or a first available otherwise.
+If `languageCode` is not specified - checks if the WPML plugin is activated and tries to extract
+currently set language, return a first available locale otherwise.
+
+---
+
 ##### `GovRight.api(model)`
 Returns a Corpus model object, which in turn has `get()` method to perform api calls.
 

@@ -24,6 +24,11 @@
         return locales[Object.keys(locales).shift()];
     };
 
+    window.GovRight.getLocaleProp = function(instance, prop, languageCode) {
+        var locale = window.GovRight.getLocale(instance, languageCode);
+        return locale[prop] || '';
+    };
+
     function model(modelName) {
         return {
             get: get.bind(null, modelName)
