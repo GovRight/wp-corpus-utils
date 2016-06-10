@@ -75,16 +75,27 @@ class CorpusApiModel {
         return $this->get($params);
     }
 
-    public function get($params) {
+    public function get($path, $params = null) {
+        if(is_null($params)) {
+            $params = $path;
+            $path = null;
+        }
         $url = $this->_apiUrl . $this->_name;
-        if(!empty($params['id'])) {
-            $url .= '/' . $params['id'];
-        }
-        if(!empty($params['method'])) {
-            $url .= '/' . $params['method'];
-        }
-        if(!empty($params['query'])) {
-            $url .= '?' . str_replace(array('%5B', '%5D'), array('[', ']'), http_build_query($params['query']));
+        if($path) {
+            $url .= '/' . $path;
+            if($params) {
+                $url .= '?' . $this->_build_query($params);
+            }
+        } else {
+            if (!empty($params['id'])) {
+                $url .= '/' . $params['id'];
+            }
+            if (!empty($params['method'])) {
+                $url .= '/' . $params['method'];
+            }
+            if(!empty($params['query'])) {
+                $url .= '?' . $this->_build_query($params['query']);
+            }
         }
         $resp = wp_remote_get($url);
         if(!is_wp_error($resp)) {
@@ -96,5 +107,9 @@ class CorpusApiModel {
             return $res;
         }
         return $resp;
+    }
+
+    protected function _build_query($params = array()) {
+        return str_replace(array('%5B', '%5D'), array('[', ']'), http_build_query($params));
     }
 }

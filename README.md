@@ -35,10 +35,10 @@ Get the Corpus API object:
 ```php
 // Get Corpus API object
 $api = corpus_get_api();
-// Or like this, result is exactly the same
+// Or like this
 $api = CorpusAPI::getInstance();
 
-// Now, you can call any corpus model name as a property or a method
+// Now, any Corpus model name can be called as a property or a method
 // on the $api object to perform API calls.
 // Singular/plural/lowercase/uppercase model name will work.
 
@@ -91,11 +91,8 @@ $package = $api->law->package([
 ]);
 
 // Or use generic model `get()` method to make calls
-$comparison = api->law->get([
-   'method' => 'compare',
-   'query' => [
-       'slug' => 'morocco-penal-revision'
-   ]
+$comparison = api->law->get('compare', [
+   'slug' => 'morocco-penal-revision'
 ]);
 ```
 
@@ -134,7 +131,7 @@ Plugin adds a global `GovRight` object which has the following properties/method
 
 ---
 
-##### `corpusApiUrl` 
+##### `GovRight#corpusApiUrl`
 String property that stores Corpus API url. Default value is `http://corpus.govright.org/api`. Example:
 
 ```javascript
@@ -146,9 +143,107 @@ $.get(GovRight.corpusApiUrl + '/laws', function(laws) {
 
 ---
 
+##### `GovRight#getLocale(instance, languageCode)`
+Extracts locale data from a model instance.
+If `languageCode` is specified - returns corresponding translations if available
+or a first available otherwise.
+If `languageCode` is not specified - checks if the WPML plugin is activated and tries to extract
+currently set language, return a first available locale otherwise.
+
+---
+
+##### `GovRight#api(model)`
+Returns a Corpus model object, which in turn has `get()` method to perform api calls.
+
+**`GovRight#api(model)`**
+_Params:_
+`model` (String) - a Corpus model name, e.g. `law`, etc.
+_Returns:_
+CorpusModel - a Corpus model object
+
+**`CorpusModel#get(path, params)`**
+_Params:_
+`path` (String) - model id or method, e.g. `count`, `findOne`, `versions/search`, etc.
+`params` (Object) - query string like filter or remote method params, etc.
+_Returns:_
+Promise that resolves with a single instance or array of instances depending on called method. Returns a single instance if id was passed as `path`.
+
+Get Corpus model object:
+
+```javascript
+var model;
+
+// Singular/plural/lowercase/uppercase model name will work.
+// These all are the same model
+model = GovRight.api('law');
+model = GovRight.api('laws');
+model = GovRight.api('Law');
+model = GovRight.api('Laws');
+
+// Camel case, these are equal
+model = GovRight.api('mediaIncident');
+model = GovRight.api('MediaIncident');
+model = GovRight.api('mediaincident');
+```
+
+Make API calls:
+
+```javascript
+var result;
+var handle = function(data) {
+    console.log(data);
+    result = data;
+};
+
+// Find in a set with filter
+GovRight.api('law').get({
+    filter: {
+        where: {
+            slug: 'morocco-penal-revision'
+        }
+    }
+}).then(handle);
+
+// Find by id
+result = GovRight.api('law').get('567028d5219fffbb2d363f38').then(handle);
+
+// Find by id with a filter
+result = GovRight.api('law').get('567028d5219fffbb2d363f38', {
+    filter: {
+        'include': [ 'user', 'discussions' ],
+        'fields': [ 'id', 'slug', 'locales' ]
+    }
+}).then(handle);
+
+// Any available model method can called as a method on
+// the model object like this
+result = GovRight.api('law').get('findOne', {
+    filter: {
+        where: {
+            slug: 'morocco-penal-revision'
+        }
+    }
+}).then(handle);
+
+result = GovRight.api('law').get('count', {
+    where: {
+        slug: 'morocco-penal-revision'
+    }
+}).then(handle);
+
+// Call custom remote methods
+GovRight.api('law').get('package', {
+    slug: 'morocco-penal-revision',
+    rev: 0
+}).then(handle);
+```
+---
+
 ## Development
 
-### Configure testing environment
+### PHP
+
+#### Configure testing environment
 ```bash
 # Go to plugin directory
 cd wp-content/plugins/wp-corpus-utils
@@ -159,8 +254,18 @@ cd wp-content/plugins/wp-corpus-utils
 
 Also, make sure you have PHPUnit installed.
 
-### Run tests
+#### Run tests
 ```bash
 # In the plugin root, just run this
 phpunit
+```
+
+### JavaScript
+
+```bash
+# Install deps
+npm install
+
+# Run tests
+npm test
 ```

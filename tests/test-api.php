@@ -66,12 +66,21 @@ class ApiTest extends WP_UnitTestCase {
     }
 
     function test_get_method() {
+        // Elaborate form
         $law = $this->api->law->get([
             'method' => 'package',
             'query' => [
                 'slug' => 'morocco-constitution-2011',
                 'rev' => 0
             ]
+        ]);
+        $this->assertFalse(is_wp_error($law), var_export($law, true));
+        $this->assertEquals('morocco-constitution-2011', $law['slug']);
+
+        // More straightforward format
+        $law = $this->api->law->get('package', [
+            'slug' => 'morocco-constitution-2011',
+            'rev' => 0
         ]);
         $this->assertFalse(is_wp_error($law), var_export($law, true));
         $this->assertEquals('morocco-constitution-2011', $law['slug']);

@@ -8,12 +8,21 @@ class UtilsTest extends WP_UnitTestCase {
         'ar' => array('title' => 'عنوان العربية')
     );
 
+    function test_js_lib() {
+        ob_start();
+        do_action('wp_head');
+        $head = ob_get_contents();
+        ob_end_clean();
+        $this->assertTrue(wp_script_is('wp-corpus-utils-corpus-api', 'enqueued'));
+        $this->assertTrue((bool)strpos($head, '/plugins/wp-corpus-utils/assets/corpus-api.js'), $head);
+    }
+
     function test_get_api_url() {
         $this->assertEquals(corpus_get_api_url(), 'http://corpus.govright.org/api');
     }
 
     function test_get_model() {
-        // Make sure this the same instance
+        // Make sure this is the same instance
         $model1 = corpus_get_model('Law');
         $model2 = corpus_get_model('Law');
         $model3 = corpus_get_model('Laws');

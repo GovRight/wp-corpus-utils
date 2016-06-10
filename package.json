@@ -1,0 +1,30 @@
+{
+  "name": "wp-corpus-utils",
+  "version": "1.1.0",
+  "description": "Developer's suite for handling common small tasks like locale data extraction or Corpus API calls in Wordpress",
+  "main": "karma.conf.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "karma": "^0.13.22",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-qunit": "^1.0.0",
+    "phantomjs-prebuilt": "^2.1.7",
+    "qunitjs": "^2.0.0-rc1"
+  },
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GovRight/wp-corpus-utils.git"
+  },
+  "author": "GovRight <contact@govright.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GovRight/wp-corpus-utils/issues"
+  },
+  "homepage": "https://github.com/GovRight/wp-corpus-utils#readme"
+}
