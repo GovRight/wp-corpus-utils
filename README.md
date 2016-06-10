@@ -131,7 +131,7 @@ Plugin adds a global `GovRight` object which has the following properties/method
 
 ---
 
-##### `GovRight#corpusApiUrl`
+##### `GovRight.corpusApiUrl`
 String property that stores Corpus API url. Default value is `http://corpus.govright.org/api`. Example:
 
 ```javascript
@@ -143,7 +143,7 @@ $.get(GovRight.corpusApiUrl + '/laws', function(laws) {
 
 ---
 
-##### `GovRight#getLocale(instance, languageCode)`
+##### `GovRight.getLocale(instance, languageCode)`
 Extracts locale data from a model instance.
 If `languageCode` is specified - returns corresponding translations if available
 or a first available otherwise.
@@ -152,20 +152,20 @@ currently set language, return a first available locale otherwise.
 
 ---
 
-##### `GovRight#api(model)`
+##### `GovRight.api(model)`
 Returns a Corpus model object, which in turn has `get()` method to perform api calls.
 
-**`GovRight#api(model)`**
-_Params:_
-`model` (String) - a Corpus model name, e.g. `law`, etc.
-_Returns:_
+**`GovRight.api(model)`**<br>
+_Params:_<br>
+`model` (String) - a Corpus model name, e.g. `law`, etc.<br>
+_Returns:_<br>
 CorpusModel - a Corpus model object
 
-**`CorpusModel#get(path, params)`**
-_Params:_
-`path` (String) - model id or method, e.g. `count`, `findOne`, `versions/search`, etc.
-`params` (Object) - query string like filter or remote method params, etc.
-_Returns:_
+**`CorpusModel.get(path, params)`**<br>
+_Params:_<br>
+`path` (String) - model id or method, e.g. `count`, `findOne`, `versions/search`, etc.<br>
+`params` (Object) - query string like filter or remote method params, etc.<br>
+_Returns:_<br>
 Promise that resolves with a single instance or array of instances depending on called method. Returns a single instance if id was passed as `path`.
 
 Get Corpus model object:
@@ -205,10 +205,10 @@ GovRight.api('law').get({
 }).then(handle);
 
 // Find by id
-result = GovRight.api('law').get('567028d5219fffbb2d363f38').then(handle);
+GovRight.api('law').get('567028d5219fffbb2d363f38').then(handle);
 
 // Find by id with a filter
-result = GovRight.api('law').get('567028d5219fffbb2d363f38', {
+GovRight.api('law').get('567028d5219fffbb2d363f38', {
     filter: {
         'include': [ 'user', 'discussions' ],
         'fields': [ 'id', 'slug', 'locales' ]
@@ -217,7 +217,7 @@ result = GovRight.api('law').get('567028d5219fffbb2d363f38', {
 
 // Any available model method can called as a method on
 // the model object like this
-result = GovRight.api('law').get('findOne', {
+GovRight.api('law').get('findOne', {
     filter: {
         where: {
             slug: 'morocco-penal-revision'
@@ -225,7 +225,7 @@ result = GovRight.api('law').get('findOne', {
     }
 }).then(handle);
 
-result = GovRight.api('law').get('count', {
+GovRight.api('law').get('count', {
     where: {
         slug: 'morocco-penal-revision'
     }
@@ -256,7 +256,7 @@ Also, make sure you have PHPUnit installed.
 
 #### Run tests
 ```bash
-# In the plugin root, just run this
+# In the plugin root, just run
 phpunit
 ```
 
