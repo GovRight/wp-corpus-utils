@@ -90,9 +90,18 @@ $package = $api->law->package([
    'rev' => 0
 ]);
 
-// Or use generic model `get()` method to make calls
-$comparison = api->law->get('compare', [
+// Or use generic `get()` method to make calls
+// It is used under the hood of the other methods described above 
+$comparison = $api->law->get('compare', [
    'slug' => 'morocco-penal-revision'
+]);
+$law = $api->law->get('findOne', [
+    'filter' => [
+        'where' => [
+            'slug' => 'morocco-penal-revision',
+            'revistionIndex' => 0
+        ]
+    ]
 ]);
 ```
 
