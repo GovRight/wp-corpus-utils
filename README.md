@@ -90,9 +90,18 @@ $package = $api->law->package([
    'rev' => 0
 ]);
 
-// Or use generic model `get()` method to make calls
-$comparison = api->law->get('compare', [
+// Or use generic `get()` method to make calls
+// It is used under the hood of the other methods described above 
+$comparison = $api->law->get('compare', [
    'slug' => 'morocco-penal-revision'
+]);
+$law = $api->law->get('findOne', [
+    'filter' => [
+        'where' => [
+            'slug' => 'morocco-penal-revision',
+            'revistionIndex' => 0
+        ]
+    ]
 ]);
 ```
 
@@ -199,7 +208,7 @@ Make API calls:
 
 ```javascript
 var result;
-var handle = function(data) {
+var handleResponse = function(data) {
     console.log(data);
     result = data;
 };
@@ -211,10 +220,10 @@ GovRight.api('law').get({
             slug: 'morocco-penal-revision'
         }
     }
-}).then(handle);
+}).then(handleResponse);
 
 // Find by id
-GovRight.api('law').get('567028d5219fffbb2d363f38').then(handle);
+GovRight.api('law').get('567028d5219fffbb2d363f38').then(handleResponse);
 
 // Find by id with a filter
 GovRight.api('law').get('567028d5219fffbb2d363f38', {
@@ -222,7 +231,7 @@ GovRight.api('law').get('567028d5219fffbb2d363f38', {
         'include': [ 'user', 'discussions' ],
         'fields': [ 'id', 'slug', 'locales' ]
     }
-}).then(handle);
+}).then(handleResponse);
 
 // Any available model method can called as a method on
 // the model object like this
@@ -232,19 +241,19 @@ GovRight.api('law').get('findOne', {
             slug: 'morocco-penal-revision'
         }
     }
-}).then(handle);
+}).then(handleResponse);
 
 GovRight.api('law').get('count', {
     where: {
         slug: 'morocco-penal-revision'
     }
-}).then(handle);
+}).then(handleResponse);
 
 // Call custom remote methods
 GovRight.api('law').get('package', {
     slug: 'morocco-penal-revision',
     rev: 0
-}).then(handle);
+}).then(handleResponse);
 ```
 ---
 
