@@ -261,7 +261,7 @@ GovRight.api('law').get('package', {
 
 ### PHP
 
-#### Configure testing environment
+##### Configure testing environment
 ```bash
 # Go to plugin directory
 cd wp-content/plugins/wp-corpus-utils
@@ -272,7 +272,7 @@ cd wp-content/plugins/wp-corpus-utils
 
 Also, make sure you have PHPUnit installed.
 
-#### Run tests
+##### Run tests
 ```bash
 # In the plugin root, just run
 phpunit
