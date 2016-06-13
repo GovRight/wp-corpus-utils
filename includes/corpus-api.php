@@ -76,7 +76,7 @@ class CorpusApiModel {
     }
 
     public function get($path, $params = null) {
-        if(is_null($params)) {
+        if(is_null($params) && is_array($path)) {
             $params = $path;
             $path = null;
         }
