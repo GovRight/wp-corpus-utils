@@ -110,10 +110,10 @@ $law = $api->law->get('findOne', [
 
 Function | Arguments | Returns | Description
 --- | --- | --- | ---
-`corpus_get_api_url()` | _None_ | _string_ | Returns Corpus API url. Default value is `http://corpus.govright.org/api`.
-`corpus_get_api()` | _None_ | _CorpusApiServer_ | Returns Corpus API object to perform API calls.
-`corpus_get_locale()` | 1. `array` `$instance` - model instance <br> 2. `string` `$language_code` (_optional_) - language code to extract | _array_ | Extracts locale data from a model instance. <br> If `$language_code` is specified - returns corresponding translations if available or a first available otherwise.<br> If `$language_code` is not specified - checks if the WPML plugin is activated and tries to extract currently set language, return a first available locale otherwise.
-`corpus_atts_string()` | 1. `array` `$atts` - attributes array <br> 2. `bool` `$include_locale` (_optional_) - include locale prop | _string_ | Converts `$atts` array into a string. Includes `data-locale` prop if `$include_locale` is `true` and WPML is activated.
+`corpus_get_api_url()` | _None_ | `string` | Returns Corpus API url. Default value is `http://corpus.govright.org/api`.
+`corpus_get_api()` | _None_ | `CorpusApiServer` | Returns Corpus API object to perform API calls.
+`corpus_get_locale()` | 1. `array` `$instance` - model instance <br> 2. `string` `$language_code` (_optional_) - language code to extract | `array` | Extracts locale data from a model instance. <br> If `$language_code` is specified - returns corresponding translations if available or a first available otherwise.<br> If `$language_code` is not specified - checks if the WPML plugin is activated and tries to extract currently set language, return a first available locale otherwise.
+`corpus_atts_string()` | 1. `array` `$atts` - attributes array <br> 2. `bool` `$include_locale` (_optional_) - include locale prop | `string` | Converts `$atts` array into a string. Includes `data-locale` prop if `$include_locale` is `true` and WPML is activated.
 
 
 ## JavaScript API reference
