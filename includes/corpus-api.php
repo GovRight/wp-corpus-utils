@@ -42,7 +42,7 @@ class CorpusApiServer {
         if(substr($name, -1) !== 's') {
             $name .= 's';
         }
-        $key = strtoupper($name);
+        $key = strtolower($name);
         if(!empty($this->_cache[$key])) {
             return $this->_cache[$key];
         }

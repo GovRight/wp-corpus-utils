@@ -1,14 +1,15 @@
 # GovRight Corpus Utilities
 
 Developer's suite for handling common small tasks like locale data extraction or GovRight Corpus API calls
-in Wordpress themes and plugins.
+in WordPress themes and plugins.
 
 ## Requirements
 
-Tested on:
-* Wordpress >= 4.5
+Tested and works properly with:
+* WordPress >= 4.5
 * PHP >= 5.5
-* (dev) PHPUnit 4.8.24
+* (dev) PHPUnit =4.8.24
+* (dev) Node.js >=5 <6
 
 ## Installation
 
@@ -19,7 +20,7 @@ Tested on:
 
 ## Plugin settings
 
-Plugin has no settings in the admin. You can change Corpus API url used by plugin by adding the following constant
+Plugin has no settings in the WordPress admin. You can change Corpus API url used by plugin by adding the following constant
 to your local `wp-config.php`:
 
 ```php
@@ -28,7 +29,7 @@ define('CORPUS_API_URL', 'http://localhost:3000/api');
 
 ## PHP API reference
 
-### Performing API calls
+#### Performing API calls
 
 Get the Corpus API object:
 
@@ -73,7 +74,7 @@ $law = $api->law('567028d5219fffbb2d363f38', [
    'fields' => [ 'id', 'slug', 'locales' ]
 ]);
 
-// Any available model method can called as a method on
+// Any available model method can be called as a method on
 // the model object like this
 $law = $api->Laws->findOne([
     'where' => [
@@ -91,7 +92,7 @@ $package = $api->law->package([
 ]);
 
 // Or use generic `get()` method to make calls
-// It is used under the hood of the other methods described above 
+// It is used under the hood of the other methods described above
 $comparison = $api->law->get('compare', [
    'slug' => 'morocco-penal-revision'
 ]);
@@ -105,86 +106,29 @@ $law = $api->law->get('findOne', [
 ]);
 ```
 
-### Helper functions
+#### Helper functions
 
----
+Function | Arguments | Returns | Description
+- | - | - | -
+`corpus_get_api_url()` | _None_ | _string_ | Returns Corpus API url. Default value is `http://corpus.govright.org/api`.
+`corpus_get_api()` | _None_ | _CorpusApiServer_ | Returns Corpus API object to perform API calls.
+`corpus_get_locale()` | 1. `array` `$instance` - model instance <br> 2. `string` `$language_code` (_optional_) - language code to extract | _array_ | Extracts locale data from a model instance. <br> If `$language_code` is specified - returns corresponding translations if available or a first available otherwise.<br> If `$language_code` is not specified - checks if the WPML plugin is activated and tries to extract currently set language, return a first available locale otherwise.
+`corpus_atts_string()` | 1. `array` `$atts` - attributes array <br> 2. `bool` `$include_locale` (_optional_) - include locale prop | _string_ | Converts `$atts` array into a string. Includes `data-locale` prop if `$include_locale` is `true` and WPML is activated.
 
-##### `corpus_get_api_url()`
-Returns Corpus API url. Default value is `http://corpus.govright.org/api`.
-
----
-
-##### `corpus_get_api()`
-Returns Corpus API object to perform API calls.
-
----
-
-##### `corpus_get_locale($instance, $languageCode = null)`
-Extracts locale data from a model instance.
-If `$languageCode` is specified - returns corresponding translations if available
-or a first available otherwise.
-If `$languageCode` is not specified - checks if the WPML plugin is activated and tries to extract
-currently set language, return a first available locale otherwise.
-
----
-
-##### `corpus_atts_string($atts, $include_locale = true)`
-Converts `$atts` array into a string. Includes `data-locale` prop if `$include_locale` is `true`
-and WPML is activated.
-
----
 
 ## JavaScript API reference
 
 Plugin adds a global `GovRight` object which has the following properties/methods:
 
----
 
-##### `GovRight.corpusApiUrl`
-String property that stores Corpus API url. Default value is `http://corpus.govright.org/api`. Example:
+Function/prop | Arguments | Returns | Description
+- | - | - | -
+`GovRight.corpusApiUrl` | - | - | String property that stores Corpus API url. Default value is `http://corpus.govright.org/api`. <br>Example:<br> `$.get(GovRight.corpusApiUrl + '/laws', laws => console.log(laws));`
+`GovRight.getLocale()` | 1. `Object` `instance` - model instance <br> 2. `String` `languageCode` (_optional_) - language code to extract | `Object` | Extracts locale data from a model instance. <br> If `languageCode` is specified - returns corresponding translations if available or a first available otherwise. <br> If `languageCode` is not specified - checks if the WPML plugin is activated and tries to extract currently set language, return a first available locale otherwise.
+`GovRight.getLocaleProp()` | 1. `Object` `instance` - model instance <br> 2. `String` `prop` - locale property to extract <br> 3. `String` `languageCode` (_optional_) - language code to extract | `String` | Extracts a property from the locale object on a given model instance. <br> If `languageCode` is specified - returns corresponding translation if available or a first available otherwise. <br> If `languageCode` is not specified - checks if the WPML plugin is activated and tries to extract currently set language, return a first available locale otherwise.
+`GovRight.api()` | 1. `String` `modelName` - Corpus model name | `Object` | Returns a Corpus model object that has the following methods: <br><br>`CorpusModel.get(path, params)` <br> _Arguments:_ <br> 1. `String` `path` - instance id or model method, e.g. `count`, `findOne`, `versions/search`, etc. <br> 2. `Object` `params` - query string like filter or remote method params, etc. <br> _Returns:_ <br> Promise that resolves with a single instance or array of instances depending on called method. Returns a single instance if id was passed as `path`. <br><br> See examples below.
 
-```javascript
-// Load all laws
-$.get(GovRight.corpusApiUrl + '/laws', function(laws) {
-    console.log(laws);
-});
-```
-
----
-
-##### `GovRight.getLocale(instance, languageCode)`
-Extracts locale data from a model instance.
-If `languageCode` is specified - returns corresponding translations if available
-or a first available otherwise.
-If `languageCode` is not specified - checks if the WPML plugin is activated and tries to extract
-currently set language, return a first available locale otherwise.
-
----
-
-##### `GovRight.getLocaleProp(instance, prop, languageCode)`
-Extracts a property from the locale object on a given model instance.
-If `languageCode` is specified - returns corresponding translation if available
-or a first available otherwise.
-If `languageCode` is not specified - checks if the WPML plugin is activated and tries to extract
-currently set language, return a first available locale otherwise.
-
----
-
-##### `GovRight.api(model)`
-Returns a Corpus model object, which in turn has `get()` method to perform api calls.
-
-**`GovRight.api(model)`**<br>
-_Params:_<br>
-`model` (String) - a Corpus model name, e.g. `law`, etc.<br>
-_Returns:_<br>
-CorpusModel - a Corpus model object
-
-**`CorpusModel.get(path, params)`**<br>
-_Params:_<br>
-`path` (String) - model id or method, e.g. `count`, `findOne`, `versions/search`, etc.<br>
-`params` (Object) - query string like filter or remote method params, etc.<br>
-_Returns:_<br>
-Promise that resolves with a single instance or array of instances depending on called method. Returns a single instance if id was passed as `path`.
+#### Performing API calls
 
 Get Corpus model object:
 
@@ -233,8 +177,7 @@ GovRight.api('law').get('567028d5219fffbb2d363f38', {
     }
 }).then(handleResponse);
 
-// Any available model method can called as a method on
-// the model object like this
+// Any available model method can be passed as the first argument like this
 GovRight.api('law').get('findOne', {
     filter: {
         where: {
@@ -261,9 +204,9 @@ GovRight.api('law').get('package', {
 
 ### PHP
 
-##### Configure testing environment
+#### Configure testing environment
 ```bash
-# Go to plugin directory
+# Go to plugin root directory
 cd wp-content/plugins/wp-corpus-utils
 
 # Run wp tests installer and follow instructions
@@ -272,7 +215,7 @@ cd wp-content/plugins/wp-corpus-utils
 
 Also, make sure you have PHPUnit installed.
 
-##### Run tests
+#### Run tests
 ```bash
 # In the plugin root, just run
 phpunit
@@ -281,7 +224,7 @@ phpunit
 ### JavaScript
 
 ```bash
-# Install deps
+# Install dependencies
 npm install
 
 # Run tests
