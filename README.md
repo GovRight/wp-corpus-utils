@@ -109,7 +109,7 @@ $law = $api->law->get('findOne', [
 #### Helper functions
 
 Function | Arguments | Returns | Description
-- | - | - | -
+--- | --- | --- | ---
 `corpus_get_api_url()` | _None_ | _string_ | Returns Corpus API url. Default value is `http://corpus.govright.org/api`.
 `corpus_get_api()` | _None_ | _CorpusApiServer_ | Returns Corpus API object to perform API calls.
 `corpus_get_locale()` | 1. `array` `$instance` - model instance <br> 2. `string` `$language_code` (_optional_) - language code to extract | _array_ | Extracts locale data from a model instance. <br> If `$language_code` is specified - returns corresponding translations if available or a first available otherwise.<br> If `$language_code` is not specified - checks if the WPML plugin is activated and tries to extract currently set language, return a first available locale otherwise.
@@ -122,7 +122,7 @@ Plugin adds a global `GovRight` object which has the following properties/method
 
 
 Function/prop | Arguments | Returns | Description
-- | - | - | -
+--- | --- | --- | ---
 `GovRight.corpusApiUrl` | - | - | String property that stores Corpus API url. Default value is `http://corpus.govright.org/api`. <br>Example:<br> `$.get(GovRight.corpusApiUrl + '/laws', laws => console.log(laws));`
 `GovRight.getLocale()` | 1. `Object` `instance` - model instance <br> 2. `String` `languageCode` (_optional_) - language code to extract | `Object` | Extracts locale data from a model instance. <br> If `languageCode` is specified - returns corresponding translations if available or a first available otherwise. <br> If `languageCode` is not specified - checks if the WPML plugin is activated and tries to extract currently set language, return a first available locale otherwise.
 `GovRight.getLocaleProp()` | 1. `Object` `instance` - model instance <br> 2. `String` `prop` - locale property to extract <br> 3. `String` `languageCode` (_optional_) - language code to extract | `String` | Extracts a property from the locale object on a given model instance. <br> If `languageCode` is specified - returns corresponding translation if available or a first available otherwise. <br> If `languageCode` is not specified - checks if the WPML plugin is activated and tries to extract currently set language, return a first available locale otherwise.
