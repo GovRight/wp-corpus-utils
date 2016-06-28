@@ -15,8 +15,7 @@ Tested and works properly with:
 
 1. Download plugin archive from GitHub and put it to `wp-content/plugins`.
 2. Activate the plugin on the Wordpress plugins page.
-3. You may remove `bin` and `tests` folders, they are used only during development.
-4. You may use the [afragen/github-updater plugin](https://github.com/afragen/github-updater) to get recent updates.
+3. You may use the [afragen/github-updater plugin](https://github.com/afragen/github-updater) to get recent updates.
 
 ## Plugin settings
 
@@ -126,7 +125,7 @@ Function/prop | Arguments | Returns | Description
 `GovRight.corpusApiUrl` | - | - | String property that stores Corpus API url. Default value is `http://corpus.govright.org/api`. <br>Example:<br> `$.get(GovRight.corpusApiUrl + '/laws', laws => console.log(laws));`
 `GovRight.getLocale()` | 1. `Object` `instance` - model instance <br> 2. `String` `languageCode` (_optional_) - language code to extract | `Object` | Extracts locale data from a model instance. <br> If `languageCode` is specified - returns corresponding translations if available or a first available otherwise. <br> If `languageCode` is not specified - checks if the WPML plugin is activated and tries to extract currently set language, return a first available locale otherwise.
 `GovRight.getLocaleProp()` | 1. `Object` `instance` - model instance <br> 2. `String` `prop` - locale property to extract <br> 3. `String` `languageCode` (_optional_) - language code to extract | `String` | Extracts a property from the locale object on a given model instance. <br> If `languageCode` is specified - returns corresponding translation if available or a first available otherwise. <br> If `languageCode` is not specified - checks if the WPML plugin is activated and tries to extract currently set language, return a first available locale otherwise.
-`GovRight.api()` | 1. `String` `modelName` - Corpus model name | `Object` | Returns a Corpus model object that has the following methods: <br><br>`CorpusModel.get(path, params)` <br> _Arguments:_ <br> 1. `String` `path` - instance id or model method, e.g. `count`, `findOne`, `versions/search`, etc. <br> 2. `Object` `params` - query string like filter or remote method params, etc. <br> _Returns:_ <br> Promise that resolves with a single instance or array of instances depending on called method. Returns a single instance if id was passed as `path`. <br><br> See examples below.
+`GovRight.api()` | 1. `String` `modelName` - Corpus model name | `Object` | Returns a Corpus model object that has the following methods: <br><br>`CorpusModel.get(path, params)` <br> _Arguments:_ <br> 1. `String` `path` - instance id or model method, e.g. `count`, `findOne`, `versions/search`, etc. <br> 2. `Object` `params` - query parameters like filter or remote method params, etc. <br> _Returns:_ <br> Promise that resolves with a single instance or array of instances depending on called method. Returns a single instance if id was passed as `path`. <br><br> See examples below.
 
 #### Performing API calls
 
